@@ -1,20 +1,28 @@
 import { useState, useEffect } from 'react';
-import './styles/App.css';
+import './styles/app.css';
 import LoginComponent from './components/loginComponent/loginComponent';
 import authService from './services/authService';
+import { LoginError } from './interfaces';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState<LoginError | null>(null);
 
   const handleLogin = async (email: string, password: string) => {
-    try {
-      await authService.login(email, password);
-      setLoggedIn(true);
-    } catch (error) {
-      console.log(error);
+    const error = await authService.login(email, password);
+    if (error === '') {
+      const isAuthenticated = await authService.isAuthenticated();
+      if (isAuthenticated) {
+        setLoggedIn(true);
+        setLoginError(null);
+      } else {
+        setLoginError('Authentication error. Please try again.');
+      }
+    } else {
+      setLoginError(error);
     }
   };
-
+  
   const handleLogout = async () => {
     try {
       await authService.logout();
@@ -47,7 +55,7 @@ const App = () => {
           <button onClick={handleLogout}>Log Out</button>
         </div>
       ) : (
-        <LoginComponent onLogin={handleLogin} />
+        <LoginComponent onLogin={handleLogin} loginError={loginError} />
       )}
     </div>
   );

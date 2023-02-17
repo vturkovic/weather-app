@@ -60,7 +60,7 @@ form > div {
   margin: 5px;
 }
 
-form div input[type=date]{
+form div input[type=date] {
   width: calc(100% - 4px);
   height: 22px;
 }
@@ -69,6 +69,13 @@ form div input[type=date]{
   margin: 2px 0px;
 }
 
+.login-error {
+  width: 180px;
+  margin: 5px;
+}
+
 .danger {
   background: #ff7c7c;
 }
+
+/*# sourceMappingURL=app.css.map */
