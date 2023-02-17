@@ -1,75 +1,67 @@
-import React, { useState } from 'react';
-import { FormInterface, LoginInterface } from '../../interfaces';
-import formValidationService from '../../services/formValidationService'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginFormComponent from './loginFormComponent/loginFormComponent';
+import authService from '../../services/auth/authService';
+import { LoginErrorType } from '../../interfaces';
 
+const LoginComponent = ({ onLogin } : any) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState<LoginErrorType | null>(null);
+  const navigate = useNavigate();
 
-const FormComponent = ({ onLogin, loginError }: LoginInterface) => {
-
-  const initalFormState: FormInterface = {
-    email: '',
-    password: ''
+  const handleLogin = async (email: string, password: string) => {
+    const error = await authService.login(email, password);
+    if (error === '') {
+      const isAuthenticated = await authService.isAuthenticated();
+      if (isAuthenticated) {
+        setLoggedIn(true);
+        setLoginError(null);
+        navigate('/weather'); // Redirect to /weather on successful login
+        onLogin();
+      } else {
+        setLoginError('Authentication error. Please try again.');
+      }
+    } else {
+      setLoginError(error);
+    }
   };
-
-  const [formData, setFormData] = useState<FormInterface>(initalFormState);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await onLogin(formData.email, formData.password);
-    setErrors({});
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
   
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  
-    let errorMessage = formValidationService.validateField(name, value);
-
-    setErrors((prevState) => ({
-      ...prevState,
-      [name]: errorMessage,
-    }));
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      setLoggedIn(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    // If the user is logged in, set a timeout to log them out after 20 minutes.
+    if (loggedIn) {
+      timeout = setTimeout(() => {
+        handleLogout();
+      }, 20 * 60 * 1000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [loggedIn, handleLogout]);
 
   return (
-      <form onSubmit={handleSubmit}>
-        <h2>Log in</h2>
+    <div className="App">
+      {loggedIn ? (
         <div>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                placeholder="Email"
-                onChange={handleChange}
-                className={errors.email ? 'danger': ''} />
-              {errors.email && (<div className='error-message'>{errors.email}</div>)}
-          </div>
-          <div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className={errors.password ? 'danger': ''} />
-            {errors.password && (<div className='error-message'>{errors.password}</div>)}
-          </div>
-          <button type="submit" disabled={Object.values(formData).some(x => !x) || Object.values(errors).some(x => x)}>
-            Log in
-          </button>
-            {loginError && (
-              <div className='login-error'>
-                {typeof loginError === 'string' ? loginError : loginError.message}
-                </div>
-            )}
-      </form>
-    );
-  };
-  
-export default FormComponent;
+          <h1>Welcome!</h1>
+          <button onClick={handleLogout}>Log Out</button>
+        </div>
+      ) : (
+        <LoginFormComponent onLogin={handleLogin} loginError={loginError} />
+      )}
+    </div>
+  );
+};
+
+export default LoginComponent;

@@ -1,6 +1,6 @@
 import firebase from 'firebase/compat/app';
 
-export type LoginError = string | firebase.FirebaseError;
+export type LoginErrorType = string | firebase.FirebaseError;
 
 export interface FormInterface {
     email: string,
@@ -9,5 +9,5 @@ export interface FormInterface {
 
 export interface LoginInterface {
     onLogin: (email: string, password: string) => Promise<void>,
-    loginError: LoginError | null
+    loginError: LoginErrorType | null
 }
