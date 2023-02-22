@@ -1,3 +1,9 @@
 @import '../components/loginComponent/loginComponent.scss';
 @import '../components/loginComponent/loginFormComponent/loginFormComponent.scss';
 @import '../components/weatherComponent/weatherComponent.scss';
+
+#root {
+    min-height: 100%;
+    background-color: #0d1117;
+    color: #c9d1cd;
+}
