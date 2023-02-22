@@ -51,14 +51,16 @@ const LoginComponent = ({ onLogin } : any) => {
   }, [loggedIn, handleLogout]);
 
   return (
-    <div className="App">
+    <div className="loginComponent">
       {loggedIn ? (
         <div>
           <h1>Welcome!</h1>
           <button onClick={handleLogout}>Log Out</button>
         </div>
       ) : (
-        <LoginFormComponent onLogin={handleLogin} loginError={loginError} />
+        <div className="form-container">
+          <LoginFormComponent onLogin={handleLogin} loginError={loginError} />
+        </div>
       )}
     </div>
   );

@@ -1,3 +1,61 @@
+.loginComponent {
+  height: 100%;
+  background-color: #0d1117;
+  color: #c9d1cd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container {
+  display: flex;
+}
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  background-color: #161b22;
+  border: 1px solid #c9d1cd;
+  border-radius: 5px;
+  padding: 8px 20px 20px 20px;
+  margin: 0 50px;
+}
+.form-container form div {
+  text-align: center;
+  margin: 5px;
+}
+.form-container form h2 {
+  text-align: center;
+}
+.form-container form input {
+  text-align: center;
+  height: 30px;
+}
+.form-container form input, .form-container form h2 {
+  margin: 5px;
+}
+.form-container form button {
+  margin: 16px 5px 0px 5px;
+  width: 80px;
+  border: none;
+}
+.form-container form .submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-container .error-message {
+  margin: 2px 0px;
+}
+.form-container .login-error {
+  width: 180px;
+  margin: 5px;
+  color: #ff7c7c;
+}
+.form-container .danger {
+  background: #ff7c7c;
+}
+
+/* Mozda maknuti */
 #root {
   height: 100%;
   display: flex;
@@ -5,77 +63,6 @@
   align-items: center;
   background-color: #0d1117;
   color: #c9d1cd;
-}
-
-.forms-container {
-  display: flex;
-}
-
-.forms-container form {
-  margin: 0 50px;
-}
-
-form > div {
-  text-align: center;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  background-color: #161b22;
-  border: 1px solid #c9d1cd;
-  border-radius: 5px;
-  padding: 8px 20px 20px 20px;
-}
-
-form h2 {
-  text-align: center;
-}
-
-form input {
-  text-align: center;
-}
-
-form button {
-  margin: 16px 5px 0px 5px;
-}
-
-form > input {
-  height: 20px;
-}
-
-form > button {
-  height: 26px;
-}
-
-form div > input {
-  height: 20px;
-}
-
-form > input, h2 {
-  margin: 5px;
-}
-
-form > div {
-  margin: 5px;
-}
-
-form div input[type=date] {
-  width: calc(100% - 4px);
-  height: 22px;
-}
-
-.error-message {
-  margin: 2px 0px;
-}
-
-.login-error {
-  width: 180px;
-  margin: 5px;
-}
-
-.danger {
-  background: #ff7c7c;
 }
 
 /*# sourceMappingURL=app.css.map */

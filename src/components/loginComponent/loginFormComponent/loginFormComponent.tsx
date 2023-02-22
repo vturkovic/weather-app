@@ -60,14 +60,16 @@ const FormComponent = ({ onLogin, loginError }: LoginInterface) => {
               className={errors.password ? 'danger': ''} />
             {errors.password && (<div className='error-message'>{errors.password}</div>)}
           </div>
-          <button type="submit" disabled={Object.values(formData).some(x => !x) || Object.values(errors).some(x => x)}>
-            Log in
-          </button>
-            {loginError && (
-              <div className='login-error'>
-                {typeof loginError === 'string' ? loginError : loginError.message}
-                </div>
-            )}
+          <div className="sumbit">
+            <button type="submit" disabled={Object.values(formData).some(x => !x) || Object.values(errors).some(x => x)}>
+              Log in
+            </button>
+              {loginError && (
+                <div className='login-error'>
+                  {typeof loginError === 'string' ? loginError : loginError.message}
+                  </div>
+              )}
+          </div>
       </form>
     );
   };
