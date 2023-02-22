@@ -1,12 +1,3 @@
 @import '../components/loginComponent/loginComponent.scss';
 @import '../components/loginComponent/loginFormComponent/loginFormComponent.scss';
-
-/* Mozda maknuti */
-#root {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0d1117;
-  color: #c9d1cd;
-}
+@import '../components/weatherComponent/weatherComponent.scss';

@@ -20,7 +20,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LoginComponent onLogin={handleLogin}/>} />
-        <Route path="/weather" element={isAuthenticated ? <WeatherComponent /> : <Navigate to="/" />} />
+        <Route path="/weather" element={<WeatherComponent />} />
+        {/* <Route path="/weather" element={isAuthenticated ? <WeatherComponent /> : <Navigate to="/" />} /> */}
       </Routes>
     </Router>
   );

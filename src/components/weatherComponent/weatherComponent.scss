@@ -1,0 +1,12 @@
+@import '../searchComponent/searchComponent.scss';
+@import '../weatherComponent/weatherCardComponent/weatherCardComponent.scss';
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .cards-container {
+        margin-bottom: 20px;
+    }
+}

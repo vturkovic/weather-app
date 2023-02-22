@@ -1,0 +1,25 @@
+.search {
+    min-height: 20vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10vh;
+ 
+    input {
+        width: 20vw;
+        height: 34px;
+        border: 1px solid grey;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    ul {
+        color: black;
+        background: white;
+        width: 20vw;
+        cursor: pointer;
+        list-style-type: none;
+        border-radius: 0px 0px 5px 5px;
+    }
+
+}
