@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
-import Image from 'react-bootstrap/Image'
+import Image from 'react-bootstrap/Image';
 import ToggleButtonComponent from '../../toggleButtonComponent/toggleButtonComponent';
-import { shortenString } from '../../../services/helperServices/helperServices'; 
+import { shortenString } from '../../../services/helperService/helperService'; 
 
 const WeatherCardComponent = ( props : any ) => {
 

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const shortenString = (str: string): string => {
     if (str.length > 20) {
       const commaIndex = str.indexOf(',');
@@ -33,4 +35,9 @@ export const extractFirstSubstring = (str: string): string =>{
 export const searchObjectsByPlacename = (input: string, objects: any[]): any | undefined => {
   const lowerInput = input.toLowerCase();
   return objects.find(obj => (obj.placename ?? '').toLowerCase().includes(lowerInput));
+};
+
+export const transformUnixTimestamp = (unixTimestamp: number) => {
+  const date = moment.unix(unixTimestamp).utc();
+  return date.format('dddd DD.MM.YYYY');
 };

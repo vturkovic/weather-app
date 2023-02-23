@@ -12,6 +12,11 @@ export const authLogin = (): any => ({
     type: 'LOGIN'
 });
   
-  export const authLogout = (): any => ({
+export const authLogout = (): any => ({
     type: 'LOGOUT'
+});
+
+export const setSelectedPlace = (payload: string): any => ({
+    type: 'SET_SELECTED_PLACE',
+    payload
 });

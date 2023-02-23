@@ -4,9 +4,9 @@ import SearchComponent from "../searchComponent/searchComponent";
 import WeatherCardComponent from "./weatherCardComponent/weatherCardComponent";
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { extractFirstSubstring } from '../../services/helperServices/helperServices';
+import { extractFirstSubstring } from '../../services/helperService/helperService';
 import { useDispatch, useSelector } from 'react-redux';
-import { addWeatherData, removeWeatherData } from '../../redux/actions';
+import { addWeatherData, removeWeatherData, setSelectedPlace } from '../../redux/actions';
 import { RootState } from '../../redux/store';
 
 const OPENWEATHERMAP_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
@@ -54,6 +54,7 @@ const WeatherComponent = () => {
 
   const handleCardOnClick = (place: string) => {
     navigate('/weather/' + extractFirstSubstring(place));
+    dispatch(setSelectedPlace(place));
   };
 
   return (

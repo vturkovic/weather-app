@@ -1,0 +1,15 @@
+.weather-place-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .weather-place-title {
+        margin: 30px 0px;
+    }
+
+    .day-cards-container {
+        .card {
+            margin-bottom: 12px;
+        }
+    }
+}
