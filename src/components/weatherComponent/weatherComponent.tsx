@@ -38,7 +38,7 @@ const WeatherComponent = () => {
   const fetchWeatherInfo = async (coords: {lat: number, lng: number}, placename: string, dispatch: any) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lng}&appid=${OPENWEATHERMAP_API_KEY}&units=${UNITS}`);
+      const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lng}&exclude=minutely,alerts&appid=${OPENWEATHERMAP_API_KEY}&units=${UNITS}`);
       const weatherInfo = response.data;
       dispatch(addWeatherData({ placename, weatherInfo }));
     } catch (error) {
