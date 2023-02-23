@@ -24,21 +24,36 @@ const WeatherCardComponent = ( props : any ) => {
       return str;
     }
   };
+
+  const handleRemovePlace = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    const placename = event.currentTarget.closest('[data-placename]')?.getAttribute('data-placename');
+    if (placename) {
+      props.onRemove(placename);
+    }
+  };
+  
+  const handleCardOnClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    const placename = event.currentTarget.getAttribute('data-placename');
+    props.onClick(placename);
+  };
   
   return (
     <div className="cards-container">
-        <Card style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
-            <Card.Body>
-                <Image src={imgSrc} fluid/>
-                <Card.Title>{shortenString(props.placename)}</Card.Title>
-                <Card.Text>{props.weatherInfo.current.weather[0].description}</Card.Text>
-                <Card.Title>{props.weatherInfo.current.temp.toFixed(1)} °C</Card.Title>
-                <div className="cardButtons">
-                    <ToggleButtonComponent />
-                    <button type="button" className="btn-close btn-close-white" aria-label="Close"></button>
-                </div>
-            </Card.Body>
-        </Card>
+        <div data-placename={props.placename} onClick={handleCardOnClick}>
+            <Card style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
+                <Card.Body>
+                    <Image src={imgSrc} fluid/>
+                    <Card.Title>{shortenString(props.placename)}</Card.Title>
+                    <Card.Text>{props.weatherInfo.current.weather[0].description}</Card.Text>
+                    <Card.Title>{props.weatherInfo.current.temp.toFixed(1)} °C</Card.Title>
+                    <div className="cardButtons">
+                        <ToggleButtonComponent />
+                        <button onClick={handleRemovePlace} type="button" className="btn-close btn-close-white" aria-label="Close"></button>
+                    </div>
+                </Card.Body>
+            </Card>
+        </div>
     </div>
   );
 }

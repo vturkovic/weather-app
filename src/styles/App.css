@@ -56,11 +56,11 @@
 }
 
 .search {
-  min-height: 16vh;
+  min-height: 12vh;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 10vh;
+  margin: 9vh 0vh;
 }
 .search input {
   width: 20vw;
@@ -78,7 +78,11 @@
   border-radius: 0px 0px 5px 5px;
 }
 
-.card-body {
+.card {
+  cursor: pointer;
+  user-select: none;
+}
+.card .card-body {
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -89,13 +93,13 @@
   border: 1px solid #30363d;
   border-radius: 5px;
 }
-.card-body .card-title, .card-body .card-text {
+.card .card-body .card-title, .card .card-body .card-text {
   margin: 0px;
 }
-.card-body label {
+.card .card-body label {
   border: none;
 }
-.card-body .cardButtons {
+.card .card-body .cardButtons {
   display: flex;
   align-items: center;
 }

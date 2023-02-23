@@ -3,11 +3,11 @@ import SearchComponent from "../searchComponent/searchComponent";
 import WeatherCardComponent from "./weatherCardComponent/weatherCardComponent";
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { WeatherData } from '../../interfaces';
+import { WeatherData } from '../../services/interfaces/interfaces';
 
 const OPENWEATHERMAP_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
 const UNITS = 'metric';
-const ALERT_MESSAGE = 'You have added 10 places. Do you want to add more?';
+const MAX_PLACES_ALERT_MESSAGE = 'You have added 10 places. Do you want to add more?';
 
 const WeatherComponent = () => {
 
@@ -25,7 +25,7 @@ const WeatherComponent = () => {
       fetchWeatherInfo(coords, placename);
       setWeatherDataCount(count => count + 1);
     } else {
-      const shouldAddMoreData = window.confirm(ALERT_MESSAGE);
+      const shouldAddMoreData = window.confirm(MAX_PLACES_ALERT_MESSAGE);
       if (shouldAddMoreData) {
         fetchWeatherInfo(coords, placename);
         setWeatherDataCount(count => count + 1);
@@ -46,6 +46,15 @@ const WeatherComponent = () => {
     }
   };
 
+  const handleRemoveCard = (placename: string) => {
+    const updatedWeatherData = weatherData.filter((data) => data.placename !== placename);
+    setWeatherData(updatedWeatherData);
+  };
+
+  const handleCardOnClick = (placename: string) => {
+    console.log('placename', placename);
+  };
+
   return (
     <div>
       <div className="weather-container">
@@ -56,7 +65,8 @@ const WeatherComponent = () => {
               key={index}
               placename={data.placename}
               weatherInfo={data.weatherInfo}
-            />
+              onClick={handleCardOnClick}
+              onRemove={handleRemoveCard} />
           ))}
         </div>
     </div>

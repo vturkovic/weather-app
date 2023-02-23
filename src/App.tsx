@@ -34,6 +34,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LoginComponent onLogin={handleLogin} />} />
           <Route path="/weather" element={<WeatherComponent />} />
+          <Route path="/weather/london" element={<WeatherComponent />} />
           <Route path="/favorites" element={<FavoritesComponent />} />
           <Route path="*" element={<Navigate to="/weather" />} />
         </Routes>
