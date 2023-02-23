@@ -8,12 +8,10 @@ export const removeWeatherData = (payload: string): any => ({
     payload
 });
 
-export const authLogin = (payload: string): any => ({
-    type: 'LOGIN',
-    payload
+export const authLogin = (): any => ({
+    type: 'LOGIN'
 });
-
-export const authLogut = (payload: string): any => ({
-    type: 'LOGOUT',
-    payload
+  
+  export const authLogout = (): any => ({
+    type: 'LOGOUT'
 });

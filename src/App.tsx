@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import authService from './services/auth/authService';
 import './styles/app.css';
 import LoginComponent from './components/loginComponent/loginComponent';
@@ -9,33 +10,23 @@ import FavoritesComponent from './components/favoritesComponent/favoritesCompone
 import WeatherPlaceComponent from './components/weatherComponent/weatherPlaceComponent/weatherPlaceComponent';
 import WeatherDayComponent from './components/weatherComponent/weatherDayComponent/weatherDayComponent';
 
-
 /* Dummy User
 user: abc@gmail.com
 pass: Asdfghjk! */
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-
-    setTimeout(() => {
-      handleLogout();
-    }, 20 * 60 * 1000);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    authService.logout();
-  };
+  useEffect(() => {
+    authService.isAuthenticated(dispatch);
+  }, [dispatch]);
 
   return (
     <Router>
-      {isAuthenticated && <NavbarComponent onLogout={handleLogout} />}
+      {isAuthenticated && <NavbarComponent />}
       {isAuthenticated ? (
         <Routes>
-          <Route path="/" element={<LoginComponent onLogin={handleLogin} />} />
           <Route path="/weather" element={<WeatherComponent />} />
           <Route path="weather/:place" element={<WeatherPlaceComponent />} />
           <Route path="weather/:place/:day" element={<WeatherDayComponent />} />
@@ -44,7 +35,7 @@ const App = () => {
         </Routes>
       ) : (
         <Routes>
-          <Route path="/" element={<LoginComponent onLogin={handleLogin} />} />
+          <Route path="/" element={<LoginComponent />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}

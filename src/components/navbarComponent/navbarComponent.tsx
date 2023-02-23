@@ -1,10 +1,11 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import authService from '../../services/auth/authService';
 
-const NavbarComponent = ({ onLogout }: any) => {
+const NavbarComponent = () => {
 
   const handleLogout = () => {
-    onLogout();
+    authService.logout();
   };
 
   return (
