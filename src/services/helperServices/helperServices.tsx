@@ -13,3 +13,19 @@ export const shortenString = (str: string): string => {
       return str;
     }
 };
+
+export const extractFirstSubstring = (str: string): string =>{
+  // Remove all spaces and convert to lowercase
+  const cleanedStr = str.replace(/\s/g, '').toLowerCase();
+
+  // Find the index of the first comma
+  const commaIndex = cleanedStr.indexOf(',');
+
+  // If no comma was found, return the original string
+  if (commaIndex === -1) {
+    return cleanedStr;
+  }
+
+  // Otherwise, return the substring up to the first comma
+  return cleanedStr.substring(0, commaIndex);
+};

@@ -2,11 +2,11 @@ import { useParams } from 'react-router-dom';
 
 export const WeatherPlaceComponent = () => {
 
-  const { placename } = useParams();
+  const { place } = useParams();
 
   return (
     <div>
-      <h1>Weather for {placename}</h1>
+      <h1>Weather for {place}</h1>
     </div>
   );
 };

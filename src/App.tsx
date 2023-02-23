@@ -9,6 +9,7 @@ import FavoritesComponent from './components/favoritesComponent/favoritesCompone
 import WeatherPlaceComponent from './components/weatherComponent/weatherPlaceComponent/weatherPlaceComponent';
 import WeatherDayComponent from './components/weatherComponent/weatherDayComponent/weatherDayComponent';
 
+
 /* Dummy User
 user: abc@gmail.com
 pass: Asdfghjk! */

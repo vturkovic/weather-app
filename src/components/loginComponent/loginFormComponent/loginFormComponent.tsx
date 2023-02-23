@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormInterface, LoginInterface } from '../../../services/interfaces/interfaces';
+import { FormInterface, LoginInterface } from '../../../interfaces/interfaces';
 import formValidationService from '../../../services/formValidation/formValidationService'
 
 

@@ -12,7 +12,7 @@ export interface LoginInterface {
     loginError: LoginErrorType | null
 }
 
-export interface WeatherData {
+export interface WeatherDataInterface {
     placename: string,
     weatherInfo: object,
 }
