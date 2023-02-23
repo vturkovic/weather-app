@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image'
 import ToggleButtonComponent from '../../toggleButtonComponent/toggleButtonComponent';
+import { shortenString } from '../../../services/helperServices/helperServices'; 
 
 const WeatherCardComponent = ( props : any ) => {
 
@@ -8,22 +9,6 @@ const WeatherCardComponent = ( props : any ) => {
   const CARD_HEIGHT = '6rem';
 
   const imgSrc = `http://openweathermap.org/img/wn/${props.weatherInfo.current.weather[0].icon}@2x.png`
-
-  const shortenString = (str: string): string => {
-    if (str.length > 20) {
-      const commaIndex = str.indexOf(',');
-      if (commaIndex >= 0) {
-        // return the substring before the first comma
-        return str.substring(0, commaIndex);
-      } else {
-        // if there's no comma, just return the first 20 characters
-        return str.substring(0, 20);
-      }
-    } else {
-      // if the string is 20 characters or less, just return the original string
-      return str;
-    }
-  };
 
   const handleRemovePlace = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
