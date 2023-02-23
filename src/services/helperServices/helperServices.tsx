@@ -29,3 +29,8 @@ export const extractFirstSubstring = (str: string): string =>{
   // Otherwise, return the substring up to the first comma
   return cleanedStr.substring(0, commaIndex);
 };
+
+export const searchObjectsByPlacename = (input: string, objects: any[]): any | undefined => {
+  const lowerInput = input.toLowerCase();
+  return objects.find(obj => (obj.placename ?? '').toLowerCase().includes(lowerInput));
+};
