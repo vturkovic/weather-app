@@ -5,9 +5,8 @@ import { RootState } from '../../../redux/store';
 import { searchObjectsByPlacename } from '../../../services/helperService/helperService';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { shortenString } from '../../../services/helperService/helperService';
+import { shortenString, filterHourlyDataByDay } from '../../../services/helperService/helperService';
 import TableComponent from '../../tableComponent/tableComponent';
-
 
 export const WeatherDayComponent = () => {
 
@@ -16,7 +15,7 @@ export const WeatherDayComponent = () => {
   const [tableRowData, setTableRowData] = useState<{ date: string, temp: string, weather: string }[]>([]);
 
   const OPENWEATHER_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
-  const NUMBER_OF_HOURS = 48;
+  const NUMBER_OF_HOURS = 36;
 
   const tableColumnData = [
     { header: 'Date', accessor: 'date' },
@@ -35,14 +34,7 @@ export const WeatherDayComponent = () => {
   }, []);
 
   useEffect(() => {
-    const resultArray = hourlyData.map((item: any) => {
-      return {
-        date: item.dt_txt,
-        temp: item.main.temp.toFixed(1) + ' °C',
-        weather: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`
-      };
-    });
-
+    const resultArray = filterHourlyDataByDay(hourlyData, day);
     setTableRowData(resultArray);
   }, [hourlyData]); 
 
@@ -51,7 +43,6 @@ export const WeatherDayComponent = () => {
     try {
       const response: any = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${weatherInfo.lat}&lon=${weatherInfo.lon}&appid=${OPENWEATHER_API_KEY}&dt=${day}&cnt=${NUMBER_OF_HOURS}&units=metric`);
       const result = response.data;
-      //dispatch(addWeatherData({ placename, weatherInfo }));
       setHourlyData(result.list);
     } catch (error) {
         console.log(error);
@@ -59,7 +50,6 @@ export const WeatherDayComponent = () => {
       setIsLoading(false);
     }
   };
-
 
   return (
     <div className="weather-place-container">

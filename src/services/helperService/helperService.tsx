@@ -41,3 +41,19 @@ export const transformUnixTimestamp = (unixTimestamp: number) => {
   const date = moment.unix(unixTimestamp).utc();
   return date.format('dddd DD.MM.YYYY');
 };
+
+export   const filterHourlyDataByDay = (hourlyData: any[], day: any): any[] => {
+  const date = new Date(parseInt(day) * 1000); // Convert unix timestamp to Date object
+  const dayOfWeek = date.getUTCDay(); // Get weekday of input day (0-6 where 0 is Sunday)
+  return hourlyData.filter((item) => {
+    const itemDate = new Date(item.dt_txt);
+    const itemDayOfWeek = itemDate.getUTCDay();
+    return itemDayOfWeek === dayOfWeek;
+  }).map((item) => {
+    return {
+      date: item.dt_txt,
+      temp: item.main.temp.toFixed(1) + ' °C',
+      weather: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`
+    };
+  });
+};
