@@ -1,10 +1,11 @@
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import ToggleButtonComponent from '../../toggleButtonComponent/toggleButtonComponent';
-import { shortenString } from '../../../services/helperService/helperService'; 
-import { useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shortenString } from '../../../services/helperServices/helperService'; 
+import { useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
+import { CARD_WIDTH, CARD_HEIGHT } from '../../../services/constants/constants';
 
 const WeatherCardComponent = ( props : any ) => {
 
@@ -13,9 +14,6 @@ const WeatherCardComponent = ( props : any ) => {
     const currentWeatherData = weatherData.find((data: any) => data.placename === props.placename);
     return currentWeatherData ? currentWeatherData.isFavorite : false;
   });
-  
-  const CARD_WIDTH = '50rem';
-  const CARD_HEIGHT = '6rem';
 
   const imgSrc = `http://openweathermap.org/img/wn/${props.weatherInfo.current.weather[0].icon}@2x.png`;
 

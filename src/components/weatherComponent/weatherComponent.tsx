@@ -4,15 +4,12 @@ import SearchComponent from "../searchComponent/searchComponent";
 import WeatherCardComponent from "./weatherCardComponent/weatherCardComponent";
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { extractFirstSubstring } from '../../services/helperService/helperService';
+import { extractFirstSubstring } from '../../services/helperServices/helperService';
 import { useDispatch, useSelector } from 'react-redux';
 import { addWeatherData, removeWeatherData, setSelectedPlace, toggleFavoritePlace } from '../../redux/actions';
 import { RootState } from '../../redux/store';
+import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS, MAX_PLACES_ALERT_MESSAGE } from '../../services/constants/constants';
 
-const OPENWEATHERMAP_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
-const OPENWEATHERMAP_API_EXCLUDE = 'minutely,alerts';
-const UNITS = 'metric';
-const MAX_PLACES_ALERT_MESSAGE = 'You have added 10 places. Do you want to add more?';
 
 const WeatherComponent = () => {
 

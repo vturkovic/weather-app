@@ -1,11 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
-import { transformUnixTimestamp } from '../../../../services/helperService/helperService';
+import { transformUnixTimestamp } from '../../../../services/helperServices/helperService';
+import { CARD_WIDTH, CARD_HEIGHT } from '../../../../services/constants/constants';
  
 const DayCardComponent = ( props : any ) => {
-
-  const CARD_WIDTH = '40rem';
-  const CARD_HEIGHT = '6rem';
 
   const imgSrc = `http://openweathermap.org/img/wn/${props.weatherInfo.weather[0].icon}@2x.png`
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import WeatherCardComponent from "../weatherComponent/weatherCardComponent/weatherCardComponent";
 import Spinner from 'react-bootstrap/Spinner';
-import { extractFirstSubstring } from '../../services/helperService/helperService';
+import { extractFirstSubstring } from '../../services/helperServices/helperService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedPlace, toggleFavoritePlace } from '../../redux/actions';
 import { RootState } from '../../redux/store';
@@ -13,8 +13,6 @@ const FavoritesComponent = () => {
   const navigate = useNavigate();
 
   const weatherData = useSelector((state: RootState) => state.weatherData.weatherData.filter((data: any) => data.isFavorite));
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRemoveFromFavorites = (placename: string) => {
     dispatch(toggleFavoritePlace({ placename, isFavorite: false }))
@@ -29,7 +27,6 @@ const FavoritesComponent = () => {
   return (
     <div>
       <div className="weather-container favorites-container">
-          {isLoading ? <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : null }
           {weatherData.slice().reverse().map((data:any, index: any) => (
             <WeatherCardComponent
               key={index}

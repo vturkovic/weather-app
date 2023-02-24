@@ -2,20 +2,18 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import { searchObjectsByPlacename } from '../../../services/helperService/helperService';
+import { searchObjectsByPlacename } from '../../../services/helperServices/helperService';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { shortenString, filterHourlyDataByDay } from '../../../services/helperService/helperService';
+import { shortenString, filterHourlyDataByDay } from '../../../services/helperServices/helperService';
 import TableComponent from '../../tableComponent/tableComponent';
+import { OPENWEATHERMAP_API_KEY, OPENWEATHER_API_NUMBER_OF_HOURS } from '../../../services/constants/constants';
 
 export const WeatherDayComponent = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [hourlyData, setHourlyData] = useState([]);
   const [tableRowData, setTableRowData] = useState<{ date: string, temp: string, weather: string }[]>([]);
-
-  const OPENWEATHER_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
-  const NUMBER_OF_HOURS = 36;
 
   const tableColumnData = [
     { header: 'Date', accessor: 'date' },
@@ -41,7 +39,7 @@ export const WeatherDayComponent = () => {
   const fetchWeatherInfo = async (weatherInfo: any) => {
     setIsLoading(true);
     try {
-      const response: any = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${weatherInfo.lat}&lon=${weatherInfo.lon}&appid=${OPENWEATHER_API_KEY}&dt=${day}&cnt=${NUMBER_OF_HOURS}&units=metric`);
+      const response: any = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${weatherInfo.lat}&lon=${weatherInfo.lon}&appid=${OPENWEATHERMAP_API_KEY}&dt=${day}&cnt=${OPENWEATHER_API_NUMBER_OF_HOURS}&units=metric`);
       const result = response.data;
       setHourlyData(result.list);
     } catch (error) {
