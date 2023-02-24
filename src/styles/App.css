@@ -64,7 +64,7 @@
   z-index: 1;
 }
 .search input {
-  width: 20vw;
+  width: 352px;
   height: 34px;
   border: 1px solid grey;
   border-radius: 4px;
@@ -75,7 +75,7 @@
   margin-top: 34px;
   color: black;
   background: white;
-  width: 20vw;
+  width: 352px;
   cursor: pointer;
   list-style-type: none;
   border-radius: 0px 0px 5px 5px;
@@ -113,6 +113,14 @@
   margin-left: 8px;
 }
 
+@media only screen and (max-width: 768px) {
+  .card {
+    width: 29rem !important;
+  }
+  .card .card-description {
+    display: none;
+  }
+}
 .weather-place-container {
   display: flex;
   flex-direction: column;

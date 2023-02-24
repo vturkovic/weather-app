@@ -48,7 +48,7 @@ const WeatherCardComponent = ( props : any ) => {
                 <Card.Body>
                     <Image src={imgSrc} fluid/>
                     <Card.Title>{shortenString(props.placename)}</Card.Title>
-                    <Card.Text>{props.weatherInfo.current.weather[0].description}</Card.Text>
+                    <Card.Text className="card-description">{props.weatherInfo.current.weather[0].description}</Card.Text>
                     <Card.Title>{props.weatherInfo.current.temp.toFixed(1)} °C</Card.Title>
                     <div className="cardButtons">
                         {props.hasFavoriteToggle ? <ToggleButtonComponent onClick={handleFavoriteToggle} isFavorite={isFavorite}/> : null}
