@@ -61,6 +61,7 @@
   align-items: center;
   flex-direction: column;
   margin: 60px 0px 2px 0px;
+  z-index: 1;
 }
 .search input {
   width: 20vw;
@@ -70,6 +71,8 @@
   text-align: center;
 }
 .search ul {
+  position: absolute;
+  margin-top: 34px;
   color: black;
   background: white;
   width: 20vw;
@@ -103,6 +106,9 @@
   display: flex;
   align-items: center;
 }
+.card .card-body .cardButtons button {
+  margin-left: 8px;
+}
 
 .weather-place-container {
   display: flex;
@@ -125,7 +131,7 @@
   margin-bottom: 20px;
 }
 .weather-container .spinner {
-  margin: 30px 0px;
+  margin-bottom: 30px;
 }
 
 table {
@@ -134,6 +140,10 @@ table {
 table td {
   line-height: 60px;
   text-align: center;
+}
+
+.favorites-container {
+  padding-top: 40px;
 }
 
 #root {

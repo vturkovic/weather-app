@@ -2,9 +2,18 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import ToggleButtonComponent from '../../toggleButtonComponent/toggleButtonComponent';
 import { shortenString } from '../../../services/helperService/helperService'; 
+import { useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
 const WeatherCardComponent = ( props : any ) => {
 
+  const isFavorite = useSelector((state: RootState) => {
+    const weatherData = state.weatherData.weatherData;
+    const currentWeatherData = weatherData.find((data: any) => data.placename === props.placename);
+    return currentWeatherData ? currentWeatherData.isFavorite : false;
+  });
+  
   const CARD_WIDTH = '50rem';
   const CARD_HEIGHT = '6rem';
 
@@ -19,9 +28,20 @@ const WeatherCardComponent = ( props : any ) => {
   };
   
   const handleCardOnClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    const target = event.target as Element;
+    if (target.tagName !== 'DIV') {
+      return;
+    }
     const placename = event.currentTarget.getAttribute('data-placename');
     props.onClick(placename);
   };
+  
+  const handleFavoriteToggle = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      props.onFavoriteToggle(props.placename, !isFavorite);
+    },
+    [ isFavorite, props]
+  );
   
   return (
     <div className="cards-container">
@@ -33,7 +53,7 @@ const WeatherCardComponent = ( props : any ) => {
                     <Card.Text>{props.weatherInfo.current.weather[0].description}</Card.Text>
                     <Card.Title>{props.weatherInfo.current.temp.toFixed(1)} °C</Card.Title>
                     <div className="cardButtons">
-                        <ToggleButtonComponent />
+                        {props.hasFavoriteToggle ? <ToggleButtonComponent onClick={handleFavoriteToggle} isFavorite={isFavorite}/> : null}
                         <button onClick={handleRemovePlace} type="button" className="btn-close btn-close-white" aria-label="Close"></button>
                     </div>
                 </Card.Body>

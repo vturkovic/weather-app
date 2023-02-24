@@ -1,14 +1,15 @@
-interface WeatherDataItem {
-  placename: string;
-  weatherInfo: Record<string, unknown>;
+interface WeatherDataState {
+  weatherData: WeatherData[];
 }
 
-interface WeatherDataState {
-  weatherData: WeatherDataItem[];
+interface WeatherData {
+  placename: string;
+  weatherInfo: any;
+  isFavorite: boolean;
 }
 
 const initialState: WeatherDataState = {
-  weatherData: []
+  weatherData: [],
 };
 
 const weatherDataReducer = (state = initialState, action: any): any => {
@@ -24,6 +25,17 @@ const weatherDataReducer = (state = initialState, action: any): any => {
         ...state,
         weatherData: newData,
       };
+      case 'TOGGLE_FAVORITE_PLACE':
+        const updatedWeatherData = state.weatherData.map(data => {
+          if (data.placename === action.payload.placename) {
+            return { ...data, isFavorite: action.payload.isFavorite };
+          }
+          return data;
+        });
+        return {
+          ...state,
+          weatherData: updatedWeatherData,
+        };
     default:
       return state;
   }

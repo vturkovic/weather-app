@@ -6,7 +6,7 @@ import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import { extractFirstSubstring } from '../../services/helperService/helperService';
 import { useDispatch, useSelector } from 'react-redux';
-import { addWeatherData, removeWeatherData, setSelectedPlace } from '../../redux/actions';
+import { addWeatherData, removeWeatherData, setSelectedPlace, toggleFavoritePlace } from '../../redux/actions';
 import { RootState } from '../../redux/store';
 
 const OPENWEATHERMAP_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
@@ -41,7 +41,7 @@ const WeatherComponent = () => {
     try {
       const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lng}&exclude=${OPENWEATHERMAP_API_EXCLUDE}&appid=${OPENWEATHERMAP_API_KEY}&units=${UNITS}`);
       const weatherInfo = response.data;
-      dispatch(addWeatherData({ placename, weatherInfo }));
+      dispatch(addWeatherData({ placename, weatherInfo, isFavorite: false }));
     } catch (error) {
         console.log(error);
     } finally {
@@ -58,6 +58,10 @@ const WeatherComponent = () => {
     dispatch(setSelectedPlace(place));
   };
 
+  const handleFavoriteToggle = (placename: string, isFavorite: boolean) => {
+    dispatch(toggleFavoritePlace({ placename, isFavorite }))
+  };
+
   return (
     <div>
       <div className="weather-container">
@@ -69,7 +73,9 @@ const WeatherComponent = () => {
               placename={data.placename}
               weatherInfo={data.weatherInfo}
               onClick={handleCardOnClick}
-              onRemove={handleRemoveCard} />
+              onRemove={handleRemoveCard} 
+              onFavoriteToggle={handleFavoriteToggle}
+              hasFavoriteToggle={true}/>
           ))}
         </div>
     </div>
