@@ -102,6 +102,9 @@
 .card .card-body label {
   border: none;
 }
+.card .card-body label:hover {
+  opacity: 0.8;
+}
 .card .card-body .cardButtons {
   display: flex;
   align-items: center;

@@ -36,7 +36,7 @@ export const WeatherDayComponent = () => {
   useEffect(() => {
     const resultArray = filterHourlyDataByDay(hourlyData, day);
     setTableRowData(resultArray);
-  }, [hourlyData]); 
+  }, [hourlyData, day]); 
 
   const fetchWeatherInfo = async (weatherInfo: any) => {
     setIsLoading(true);
