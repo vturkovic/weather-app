@@ -27,7 +27,7 @@ const WeatherCardComponent = ( props : any ) => {
   
   const handleCardOnClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
     const target = event.target as Element;
-    if (target.tagName !== 'DIV') {
+    if (target.closest('.cardButtons')) {
       return;
     }
     const placename = event.currentTarget.getAttribute('data-placename');
@@ -38,7 +38,7 @@ const WeatherCardComponent = ( props : any ) => {
     (event: React.MouseEvent<HTMLButtonElement>) => {
       props.onFavoriteToggle(props.placename, !isFavorite);
     },
-    [ isFavorite, props]
+    [isFavorite, props]
   );
   
   return (
@@ -47,8 +47,10 @@ const WeatherCardComponent = ( props : any ) => {
             <Card style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
                 <Card.Body>
                     <Image src={imgSrc} fluid/>
-                    <Card.Title>{shortenString(props.placename)}</Card.Title>
-                    <Card.Text className="card-description">{props.weatherInfo.current.weather[0].description}</Card.Text>
+                    <div className="card-main-text">
+                      <Card.Text>{shortenString(props.placename)}</Card.Text>
+                      <Card.Text className="card-description">{props.weatherInfo.current.weather[0].description}</Card.Text>
+                    </div>        
                     <Card.Title>{props.weatherInfo.current.temp.toFixed(1)} °C</Card.Title>
                     <div className="cardButtons">
                         {props.hasFavoriteToggle ? <ToggleButtonComponent onClick={handleFavoriteToggle} isFavorite={isFavorite}/> : null}

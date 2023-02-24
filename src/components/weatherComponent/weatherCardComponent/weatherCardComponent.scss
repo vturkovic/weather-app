@@ -12,6 +12,16 @@
         background: #30363d;
         border: 1px solid #30363d;
         border-radius: 5px;
+
+        .card-main-text {
+            display: flex;
+            align-items: center;
+
+            p:nth-of-type(1) {
+                font-size: 20px;
+                margin-right: 32px;
+            }
+        }
     
         .card-title, .card-text {
             margin: 0px;
@@ -41,8 +51,10 @@
     .card {
         width: 29rem !important;
 
-        .card-description {
-            display: none;
+        .card-main-text {
+            p:nth-of-type(2) {
+                display: none;
+            }
         }
     }
 }
