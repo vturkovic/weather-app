@@ -8,7 +8,7 @@ const WeatherCardComponent = ( props : any ) => {
   const CARD_WIDTH = '50rem';
   const CARD_HEIGHT = '6rem';
 
-  const imgSrc = `http://openweathermap.org/img/wn/${props.weatherInfo.current.weather[0].icon}@2x.png`
+  const imgSrc = `http://openweathermap.org/img/wn/${props.weatherInfo.current.weather[0].icon}@2x.png`;
 
   const handleRemovePlace = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
