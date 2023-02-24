@@ -125,6 +125,11 @@
   margin-bottom: 12px;
 }
 
+.card-text svg {
+  position: relative;
+  top: -1px;
+}
+
 .weather-container {
   display: flex;
   flex-direction: column;
