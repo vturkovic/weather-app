@@ -25,17 +25,22 @@ const weatherDataReducer = (state = initialState, action: any): any => {
         ...state,
         weatherData: newData,
       };
-      case 'TOGGLE_FAVORITE_PLACE':
-        const updatedWeatherData = state.weatherData.map(data => {
-          if (data.placename === action.payload.placename) {
-            return { ...data, isFavorite: action.payload.isFavorite };
-          }
-          return data;
-        });
-        return {
-          ...state,
-          weatherData: updatedWeatherData,
-        };
+    case 'SET_WEATHER_DATA':
+      return {
+        ...state,
+        weatherData: action.payload,
+      };
+    case 'TOGGLE_FAVORITE_PLACE':
+      const updatedWeatherData = state.weatherData.map(data => {
+        if (data.placename === action.payload.placename) {
+          return { ...data, isFavorite: action.payload.isFavorite };
+        }
+        return data;
+      });
+      return {
+        ...state,
+        weatherData: updatedWeatherData,
+      };
     default:
       return state;
   }

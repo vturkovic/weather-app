@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 import { FirebaseError } from 'firebase/app';
 import { firebaseConfig } from '../firebase/firebaseConfig';
 import moment from 'moment';
@@ -10,29 +11,50 @@ const SESSION_DURATION = 20 * 60 * 1000; //ms
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const db = firebase.firestore();
+
 const authService = {
 
   async login(email: string, password: string): Promise<string | null> {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
+      const user = firebase.auth().currentUser;
+      const userId = user?.uid;
+      localStorage.setItem('userId', userId || '');
+  
       const token = email + moment().format();
       localStorage.setItem('X-token', token || '');
-
+      
+      if (userId) {
+        const isAuthenticated = true;
+        const authRef = db.collection('auth').doc(userId);
+        authRef.set({isAuthenticated});
+      }
+  
       setTimeout(() => {
         this.logout();
       }, SESSION_DURATION);
-
+  
       return '';
-
+  
     } catch (error) {
       return 'Login failed. Please check your credentials and try again.';
     }
   },
+  
 
   async logout() {
     try {
       await firebase.auth().signOut();
       localStorage.removeItem('X-token');
+  
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        const isAuthenticated = false;
+        const authRef = db.collection('auth').doc(userId);
+        authRef.set({isAuthenticated});
+      }
+  
       return null;
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

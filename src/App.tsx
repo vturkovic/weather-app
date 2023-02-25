@@ -9,13 +9,14 @@ import NavbarComponent from './components/navbarComponent/navbarComponent';
 import FavoritesComponent from './components/favoritesComponent/favoritesComponent';
 import WeatherPlaceComponent from './components/weatherComponent/weatherPlaceComponent/weatherPlaceComponent';
 import WeatherDayComponent from './components/weatherComponent/weatherDayTableComponent/weatherDayTableComponent';
+import { RootState } from './redux/store';
 
 /* Dummy User
 user: abc@gmail.com
 pass: Asdfghjk! */
 
 const App = () => {
-  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   useEffect(() => {

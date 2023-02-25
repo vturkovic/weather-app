@@ -8,6 +8,11 @@ export const removeWeatherData = (payload: string): any => ({
     payload
 });
 
+export const setWeatherData = (payload: []): any => ({
+    type: 'SET_WEATHER_DATA',
+    payload
+});
+
 export const addFavoritePlace = (payload: boolean): any => ({
     type: 'ADD_FAVORITE_PLACE',
     payload
