@@ -8,3 +8,7 @@ export const CARD_WIDTH = '46rem';
 export const CARD_HEIGHT = '6rem';
 
 export const SEARCH_DEBOUNCE_TIME = 300;
+
+export const TABLE_COLUMN_ACCESSOR_WEATHER = 'weather';
+
+export const WEATHER_TABLE_IMAGE_SIZE = '60px';

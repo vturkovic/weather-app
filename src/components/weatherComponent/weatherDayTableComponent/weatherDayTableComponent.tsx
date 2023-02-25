@@ -5,7 +5,7 @@ import { RootState } from '../../../redux/store';
 import { searchObjectsByPlacename } from '../../../services/helperServices/helperService';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { shortenString, filterHourlyDataByDay } from '../../../services/helperServices/helperService';
+import { shortenString, filterHourlyDataByDay, transformUnixTimestamp } from '../../../services/helperServices/helperService';
 import TableComponent from '../../tableComponent/tableComponent';
 import { OPENWEATHERMAP_API_KEY, OPENWEATHER_API_NUMBER_OF_HOURS } from '../../../services/constants/constants';
 
@@ -52,12 +52,11 @@ export const WeatherDayComponent = () => {
   return (
     <div className="weather-place-container">
       <div className="weather-place-title">
-        <h2>Hourly weather for {`${shortenString(place?.charAt(0).toUpperCase()+place?.slice(1))}`}</h2>
+        <h2>Hourly weather for {`${shortenString(place?.charAt(0).toUpperCase()+place?.slice(1))}, ${day ? transformUnixTimestamp(parseInt(day)): null}`}</h2>
       </div>
       <div className="day-cards-container">
         {isLoading ? 
-          <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : 
-          <>
+          <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : <>
           {tableRowData.length > 0 ? (
             <TableComponent tableRowData={tableRowData} tableColumnData={tableColumnData}/>
           ) : null}

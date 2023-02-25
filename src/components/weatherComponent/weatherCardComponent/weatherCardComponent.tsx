@@ -61,6 +61,6 @@ const WeatherCardComponent = ( props : any ) => {
         </div>
     </div>
   );
-}
+};
 
 export default WeatherCardComponent;

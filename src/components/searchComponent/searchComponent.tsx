@@ -55,7 +55,7 @@ export const SearchComponent = ({onPlaceNameChanged}: SearchComponentProps) => {
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder="Start typing location name..."/>
+          placeholder="Start typing location name"/>
         {/* We can use the "status" to decide whether we should display the dropdown or not */}
         {status === "OK" && <ul>{renderSuggestions()}</ul>}
       </div>
