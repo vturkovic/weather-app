@@ -90,7 +90,7 @@ const WeatherComponent = () => {
       <div className="weather-container">
           <SearchComponent onPlaceNameChanged={handlePlacename}/>
           {isLoading ? <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : null }
-          {weatherDataRedux.slice().reverse().map((data:any, index: any) => (
+          {weatherDataRedux.slice().reverse().map((data:any, index: number) => (
             <WeatherCardComponent
               key={index}
               placename={data.placename}

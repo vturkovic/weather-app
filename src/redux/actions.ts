@@ -1,4 +1,6 @@
-export const addWeatherData = (payload: {}): any => ({
+import { WeatherDataInterface } from '@interfaces'
+
+export const addWeatherData = (payload: WeatherDataInterface): any => ({
     type: 'ADD_WEATHER_DATA',
     payload
 });
@@ -8,7 +10,7 @@ export const removeWeatherData = (payload: string): any => ({
     payload
 });
 
-export const setWeatherData = (payload: []): any => ({
+export const setWeatherData = (payload: WeatherDataInterface): any => ({
     type: 'SET_WEATHER_DATA',
     payload
 });
