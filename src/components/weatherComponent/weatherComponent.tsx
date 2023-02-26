@@ -13,11 +13,10 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/database';
+import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase } from '../../services/firebase/firebaseActions';
 
 
 const WeatherComponent = () => {
-
-  const db = firebase.firestore();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,15 +60,7 @@ const WeatherComponent = () => {
       const weatherInfo = response.data;
       const weatherDataResponse = { placename, weatherInfo, isFavorite: false }
       dispatch(addWeatherData(weatherDataResponse));
-
-      const userId = localStorage.getItem('userId');
-      if (userId) {
-        const weatherDataRef = db.collection('weatherData').doc(userId);
-        weatherDataRef.update({
-          weatherData: firebase.firestore.FieldValue.arrayUnion(weatherDataResponse),
-        });
-      }
-
+      updateWeatherDataFirebase(weatherDataResponse);
     } catch (error) {
         console.log(error);
     } finally {
@@ -90,57 +81,9 @@ const WeatherComponent = () => {
   
   const handleFavoriteToggle = (placename: string, isFavorite: boolean) => {
     dispatch(toggleFavoritePlace({ placename, isFavorite }));
-  
-    // Get a reference to the Firebase Firestore database
-    const db = firebase.firestore();
-  
-    // Find the document with the given userId in the weatherData collection
-    const userId = localStorage.getItem('userId');
-    if (!userId) return;
-    const weatherDataRef = db.collection('weatherData').doc(userId);
-  
-    weatherDataRef.get().then((doc) => {
-      if (doc.exists) {
-        const weatherData = doc.data()?.weatherData;
-  
-        // Find the object with the given placename in the weatherData array and update its isFavorite property
-        const updatedWeatherData = weatherData.map((data: any) => {
-          if (data.placename === placename) {
-            return { ...data, isFavorite };
-          }
-          return data;
-        });
-  
-        // Update the weatherData object in Firestore
-        weatherDataRef.update({ weatherData: updatedWeatherData }).then(() => {
-          console.log('Weather data updated successfully!');
-        }).catch((error) => {
-          console.error('Error updating weather data: ', error);
-        });
-      } else {
-        console.error('No such document!');
-      }
-    }).catch((error) => {
-      console.error('Error getting document: ', error);
-    });
+    toggleFavoritePlaceFirebase(placename, isFavorite);
   };
-  
-  
 
-  const removeWeatherDataFirebase = async (placeName: any): Promise<void> => {
-    const userId = localStorage.getItem('userId');
-    if (!userId) return;
-  
-    const weatherDataRef = db.collection('weatherData').doc(userId);
-    const document = await weatherDataRef.get();
-    const weatherDataArray = document.get('weatherData');
-  
-    const updatedData = weatherDataArray.filter(
-      (data: any) => data.placename !== placeName
-    );
-  
-    await weatherDataRef.update({ weatherData: updatedData });
-  };
 
   return (
     <div>

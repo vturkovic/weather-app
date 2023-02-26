@@ -52,9 +52,41 @@
         width: 29rem !important;
 
         .card-main-text {
+            p {
+                font-size: 14px;
+            }
             p:nth-of-type(2) {
                 display: none;
             }
         }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    
+    .card {
+        width: 18rem !important;
+        height: 5rem !important;
+
+        .card-body {
+            img {
+                display: none;
+            }
+        }
+
+        .card-main-text {
+            p {
+                font-size: 13px !important;
+            }
+            p:nth-of-type(2) {
+                display: none;
+            }
+        }
+
+        .card-title.h5 {
+            font-size: 13px !important;
+        }
+
+
     }
 }

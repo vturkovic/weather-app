@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import WeatherCardComponent from "../weatherComponent/weatherCardComponent/weatherCardComponent";
-import Spinner from 'react-bootstrap/Spinner';
 import { extractFirstSubstring } from '../../services/helperServices/helperService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedPlace, toggleFavoritePlace } from '../../redux/actions';
 import { RootState } from '../../redux/store';
+import { toggleFavoritePlaceFirebase } from '../../services/firebase/firebaseActions';
+
 
 const FavoritesComponent = () => {
 
@@ -14,15 +14,15 @@ const FavoritesComponent = () => {
 
   const weatherData = useSelector((state: RootState) => state.weatherData.weatherData.filter((data: any) => data.isFavorite));
 
-  const handleRemoveFromFavorites = (placename: string) => {
-    dispatch(toggleFavoritePlace({ placename, isFavorite: false }))
+  const handleRemoveFromFavorites = (placename: string, isFavorite = false) => {
+    dispatch(toggleFavoritePlace({ placename, isFavorite: false }));
+    toggleFavoritePlaceFirebase(placename, false);
   };
 
   const handleCardOnClick = (place: string) => {
     navigate('/weather/' + extractFirstSubstring(place));
     dispatch(setSelectedPlace(place));
   };
-
 
   return (
     <div>
