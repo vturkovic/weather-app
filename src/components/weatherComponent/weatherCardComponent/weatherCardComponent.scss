@@ -8,9 +8,9 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        color: #c9d1d9;
-        background: #30363d;
-        border: 1px solid #30363d;
+        color: $cardColor;
+        background: $cardBackground;
+        border: 1px solid $cardBorderColor;
         border-radius: 5px;
 
         .card-main-text {

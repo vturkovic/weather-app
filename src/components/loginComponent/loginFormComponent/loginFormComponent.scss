@@ -1,4 +1,4 @@
-$danger-color: #ff7c7c;
+@import '../../../styles/variables.scss';
 
 .form-container {
     display: flex;
@@ -6,7 +6,7 @@ $danger-color: #ff7c7c;
     form {
         display: flex;
         flex-direction: column;
-        background-color: #161b22;
+        background-color: $loginFormBackgroundColor;
         border: 1px solid #c9d1cd;
         border-radius: 5px;
         padding: 8px 20px 20px 20px;

@@ -27,7 +27,7 @@ const FavoritesComponent = () => {
   return (
     <div>
       <div className="weather-container favorites-container">
-          {weatherData.slice().reverse().map((data:any, index: number) => (
+          {weatherData.length > 0 ? weatherData.slice().reverse().map((data:any, index: number) => (
             <WeatherCardComponent
               key={index}
               placename={data.placename}
@@ -35,7 +35,7 @@ const FavoritesComponent = () => {
               onClick={handleCardOnClick}
               onRemove={handleRemoveFromFavorites} 
               hasFavoriteToggle={false} />
-          ))}
+          )): <h2>No favorites selected!</h2>}
         </div>
     </div>
   );

@@ -90,17 +90,17 @@ const WeatherComponent = () => {
       <div className="weather-container">
           <SearchComponent onPlaceNameChanged={handlePlacename}/>
           {isLoading ? <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : null }
-          {weatherDataRedux.slice().reverse().map((data:any, index: number) => (
-            <WeatherCardComponent
-              key={index}
-              placename={data.placename}
-              weatherInfo={data.weatherInfo}
-              onClick={handleCardOnClick}
-              onRemove={handleRemoveCard} 
-              onFavoriteToggle={handleFavoriteToggle}
-              hasFavoriteToggle={true}
-            />
-          ))}
+          {weatherDataRedux.length > 0 ? weatherDataRedux.slice().reverse().map((data:any, index: number) => (
+          <WeatherCardComponent
+            key={index}
+            placename={data.placename}
+            weatherInfo={data.weatherInfo}
+            onClick={handleCardOnClick}
+            onRemove={handleRemoveCard} 
+            onFavoriteToggle={handleFavoriteToggle}
+            hasFavoriteToggle={true}
+          />
+        )) : null}
         </div>
     </div>
   );

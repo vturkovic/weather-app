@@ -67,7 +67,7 @@ const FormComponent = ({ onLogin, loginError }: LoginInterface) => {
               {loginError && (
                 <div className='login-error'>
                   {typeof loginError === 'string' ? loginError : loginError.message}
-                  </div>
+                </div>
               )}
           </div>
       </form>

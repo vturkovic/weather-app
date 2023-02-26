@@ -2,8 +2,8 @@
 
 .loginComponent {
     height: 100vh;
-    background-color: #0d1117;
-    color: #c9d1cd;
+    background-color: $loginBackgorundColor;
+    color: $loginColor;
     display: flex;
     justify-content: center;
     align-items: center;
