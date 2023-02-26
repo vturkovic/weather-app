@@ -12,7 +12,6 @@ import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS, MAX_PLACES_A
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import 'firebase/compat/database';
 import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase } from '@firebaseActions';
 
 
@@ -22,7 +21,6 @@ const WeatherComponent = () => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [weatherDataCount, setWeatherDataCount] = useState<number>(0);
   const weatherDataRedux = useSelector((state: RootState) => state.weatherData.weatherData);
 
   useEffect(() => {
@@ -41,14 +39,12 @@ const WeatherComponent = () => {
   }, [dispatch]);
   
   const handlePlacename = (placename: string, coords: {lat: number, lng: number}) => {
-    if (weatherDataCount < 10) {
+    if (weatherDataRedux.length < 10) {
       fetchWeatherInfo(coords, placename, dispatch);
-      setWeatherDataCount(count => count + 1);
     } else {
       const shouldAddMoreData = window.confirm(MAX_PLACES_ALERT_MESSAGE);
       if (shouldAddMoreData) {
         fetchWeatherInfo(coords, placename, dispatch);
-        setWeatherDataCount(count => count + 1);
       }
     }
   };  
@@ -83,7 +79,6 @@ const WeatherComponent = () => {
     dispatch(toggleFavoritePlace({ placename, isFavorite }));
     toggleFavoritePlaceFirebase(placename, isFavorite);
   };
-
 
   return (
     <div>
