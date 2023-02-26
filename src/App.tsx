@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import authService from './services/auth/authService';
+import authService from '@authService';
+import { RootState } from '@reduxStore';
 import './styles/app.css';
 import LoginComponent from './components/loginComponent/loginComponent';
 import WeatherComponent from './components/weatherComponent/weatherComponent';
@@ -9,7 +10,7 @@ import NavbarComponent from './components/navbarComponent/navbarComponent';
 import FavoritesComponent from './components/favoritesComponent/favoritesComponent';
 import WeatherPlaceComponent from './components/weatherComponent/weatherPlaceComponent/weatherPlaceComponent';
 import WeatherDayComponent from './components/weatherComponent/weatherDayTableComponent/weatherDayTableComponent';
-import { RootState } from './redux/store';
+
 
 /* Dummy User
 user: abc@gmail.com

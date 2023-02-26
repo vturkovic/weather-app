@@ -1,11 +1,11 @@
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
 import ToggleButtonComponent from '../../toggleButtonComponent/toggleButtonComponent';
-import { shortenString } from '../../../services/helperServices/helperService'; 
+import { shortenString } from '@helperService';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { CARD_WIDTH, CARD_HEIGHT } from '../../../services/constants/constants';
+import { RootState } from '@reduxStore';
+import { CARD_WIDTH, CARD_HEIGHT } from '@constants';
 
 const WeatherCardComponent = ( props : any ) => {
 

@@ -20,3 +20,13 @@ export interface WeatherDataInterface {
 export type SearchComponentProps = {
     onPlaceNameChanged: (placename: string, coords: {lat: number, lng: number}) => void;
 }
+
+export interface WeatherData {
+    placename: string,
+    weatherInfo: any,
+    isFavorite: boolean,
+}
+
+export interface WeatherDataState {
+    weatherData: WeatherData[],
+}

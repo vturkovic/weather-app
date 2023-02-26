@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
-import { transformUnixTimestamp } from '../../../../services/helperServices/helperService';
-import { CARD_WIDTH, CARD_HEIGHT } from '../../../../services/constants/constants';
+import { transformUnixTimestamp } from '@helperService';
+import { CARD_WIDTH, CARD_HEIGHT } from '@constants';
  
 const DayCardComponent = ( props : any ) => {
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FormInterface, LoginInterface } from '../../../interfaces/interfaces';
-import formValidationService from '../../../services/formValidation/formValidationService'
+import { FormInterface, LoginInterface } from '@interfaces';
+import formValidationService from '@formValidationService';
 
 
 const FormComponent = ({ onLogin, loginError }: LoginInterface) => {

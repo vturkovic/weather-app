@@ -1,7 +1,6 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import authService from '../../services/auth/authService';
-
+import authService from '@authService';
 
 const NavbarComponent = () => {
 

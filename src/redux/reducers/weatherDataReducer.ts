@@ -1,12 +1,4 @@
-interface WeatherDataState {
-  weatherData: WeatherData[];
-}
-
-interface WeatherData {
-  placename: string;
-  weatherInfo: any;
-  isFavorite: boolean;
-}
+import { WeatherDataState }  from '@interfaces';
 
 const initialState: WeatherDataState = {
   weatherData: [],

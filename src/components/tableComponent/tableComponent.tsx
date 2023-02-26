@@ -1,5 +1,5 @@
 import { Table, Image } from 'react-bootstrap';
-import { TABLE_COLUMN_ACCESSOR_WEATHER, WEATHER_TABLE_IMAGE_SIZE } from '../../services/constants/constants';
+import { TABLE_COLUMN_ACCESSOR_WEATHER, WEATHER_TABLE_IMAGE_SIZE } from '@constants';
 
 const TableComponent = ({tableColumnData, tableRowData}: {tableColumnData: any, tableRowData: any}) => {
     return (

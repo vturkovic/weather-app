@@ -4,16 +4,16 @@ import SearchComponent from "../searchComponent/searchComponent";
 import WeatherCardComponent from "./weatherCardComponent/weatherCardComponent";
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { extractFirstSubstring } from '../../services/helperServices/helperService';
+import { extractFirstSubstring } from '@helperService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWeatherData, addWeatherData, removeWeatherData, setSelectedPlace, toggleFavoritePlace } from '../../redux/actions';
-import { RootState } from '../../redux/store';
-import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS, MAX_PLACES_ALERT_MESSAGE } from '../../services/constants/constants';
+import { setWeatherData, addWeatherData, removeWeatherData, setSelectedPlace, toggleFavoritePlace } from '@reduxActions';
+import { RootState } from '@reduxStore';
+import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS, MAX_PLACES_ALERT_MESSAGE } from '@constants';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/database';
-import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase } from '../../services/firebase/firebaseActions';
+import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase } from '@firebaseActions';
 
 
 const WeatherComponent = () => {

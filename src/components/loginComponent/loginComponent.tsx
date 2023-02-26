@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginFormComponent from './loginFormComponent/loginFormComponent';
-import authService from '../../services/auth/authService';
-import { LoginErrorType } from '../../interfaces/interfaces';
+import authService from '@authService';
+import { LoginErrorType } from '@interfaces';
 
 const LoginComponent = () => {
   const [loginError, setLoginError] = useState<LoginErrorType | null>(null);

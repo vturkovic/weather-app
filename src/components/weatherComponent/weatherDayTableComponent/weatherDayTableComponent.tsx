@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { searchObjectsByPlacename } from '../../../services/helperServices/helperService';
+import { RootState } from '@reduxStore';
+import { shortenString, filterHourlyDataByDay, transformUnixTimestamp, searchObjectsByPlacename } from '@helperService';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { shortenString, filterHourlyDataByDay, transformUnixTimestamp } from '../../../services/helperServices/helperService';
 import TableComponent from '../../tableComponent/tableComponent';
-import { OPENWEATHERMAP_API_KEY, OPENWEATHER_API_NUMBER_OF_HOURS } from '../../../services/constants/constants';
+import { OPENWEATHERMAP_API_KEY, OPENWEATHER_API_NUMBER_OF_HOURS } from '@constants';
 
 export const WeatherDayComponent = () => {
 

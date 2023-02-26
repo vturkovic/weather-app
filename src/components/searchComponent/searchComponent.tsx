@@ -1,7 +1,7 @@
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
-import { SearchComponentProps } from '../../interfaces/interfaces';
-import { SEARCH_DEBOUNCE_TIME } from "../../services/constants/constants";
+import { SearchComponentProps } from '@interfaces';
+import { SEARCH_DEBOUNCE_TIME } from '@constants';
 
 
 export const SearchComponent = ({onPlaceNameChanged}: SearchComponentProps) => {

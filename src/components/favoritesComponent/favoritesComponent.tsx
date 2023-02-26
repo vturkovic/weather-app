@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import WeatherCardComponent from "../weatherComponent/weatherCardComponent/weatherCardComponent";
-import { extractFirstSubstring } from '../../services/helperServices/helperService';
+import { extractFirstSubstring } from '@helperService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedPlace, toggleFavoritePlace } from '../../redux/actions';
-import { RootState } from '../../redux/store';
-import { toggleFavoritePlaceFirebase } from '../../services/firebase/firebaseActions';
+import { setSelectedPlace, toggleFavoritePlace } from '@reduxActions';
+import { RootState } from '@reduxStore';
+import { toggleFavoritePlaceFirebase } from '@firebaseActions';
 
 
 const FavoritesComponent = () => {
@@ -27,7 +27,7 @@ const FavoritesComponent = () => {
   return (
     <div>
       <div className="weather-container favorites-container">
-          {weatherData.slice().reverse().map((data:any, index: any) => (
+          {weatherData.slice().reverse().map((data:any, index: number) => (
             <WeatherCardComponent
               key={index}
               placename={data.placename}

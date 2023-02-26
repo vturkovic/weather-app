@@ -1,3 +1,5 @@
+export const SESSION_DURATION = 20 * 60 * 1000; //ms
+
 export const OPENWEATHERMAP_API_KEY = '9ef3840b9723fd7a9720b553241bcbbc';
 export const OPENWEATHERMAP_API_EXCLUDE = 'minutely,alerts';
 export const UNITS = 'metric';

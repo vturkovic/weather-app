@@ -1,16 +1,14 @@
+import moment from 'moment';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { FirebaseError } from 'firebase/app';
-import { firebaseConfig } from '../firebase/firebaseConfig';
-import moment from 'moment';
-import { authLogin, authLogout } from '../../redux/actions';
-
-const SESSION_DURATION = 20 * 60 * 1000; //ms
+import { firebaseConfig } from '@firebaseConfig';
+import { authLogin, authLogout } from '@reduxActions';
+import { SESSION_DURATION } from '@constants';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 const db = firebase.firestore();
 
 const authService = {
@@ -42,7 +40,6 @@ const authService = {
     }
   },
   
-
   async logout() {
     try {
       await firebase.auth().signOut();

@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { searchObjectsByPlacename } from '../../../services/helperServices/helperService';
 import DayCardComponent from './dayCardComponent/dayCardComponent';
-import { RootState } from '../../../redux/store';
-import { shortenString } from '../../../services/helperServices/helperService';
+import { RootState } from '@reduxStore';
+import { searchObjectsByPlacename, shortenString } from '@helperService';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS } from '../../../services/constants/constants';
+import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS } from '@constants';
 
 export const WeatherPlaceComponent = () => {
 

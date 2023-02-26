@@ -6,6 +6,18 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": "./src",
+    "paths": {
+      "@helperService": ["services/helperServices/helperService"],
+      "@firebaseActions": ["services/firebase/firebaseActions"],
+      "@firebaseConfig": ["services/firebase/firebaseConfig"],
+      "@constants": ["services/constants/constants"],
+      "@authService": ["services/auth/authService"],
+      "@formValidationService": ["services/formValidation/formValidationService"],
+      "@interfaces": ["interfaces/interfaces"],
+      "@reduxActions": ["redux/actions"],
+      "@reduxStore": ["redux/store"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
