@@ -16,7 +16,7 @@ export const updateWeatherDataFirebase = (weatherDataResponse: any) => {
     }
 };
 
-export const removeWeatherDataFirebase = async (placeName: string): Promise<void> => {
+export const removeWeatherDataFirebase = async (id: number): Promise<void> => {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
   
@@ -25,7 +25,7 @@ export const removeWeatherDataFirebase = async (placeName: string): Promise<void
     const weatherDataArray = document.get('weatherData');
   
     const updatedData = weatherDataArray.filter(
-      (data: any) => data.placename !== placeName
+      (data: any) => data.id !== id
     );
   
     await weatherDataRef.update({ weatherData: updatedData });

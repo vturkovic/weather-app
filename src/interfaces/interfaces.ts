@@ -22,6 +22,7 @@ export type SearchComponentProps = {
 }
 
 export interface WeatherData {
+    id: number,
     placename: string,
     weatherInfo: any,
     isFavorite: boolean,

@@ -19,9 +19,9 @@ const WeatherCardComponent = ( props : any ) => {
 
   const handleRemovePlace = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    const placename = event.currentTarget.closest('[data-placename]')?.getAttribute('data-placename');
-    if (placename) {
-      props.onRemove(placename);
+    const cardId = event.currentTarget.closest('[data-id]')?.getAttribute('data-id');
+    if (cardId) {
+      props.onRemove(cardId);
     }
   };
   
@@ -43,7 +43,7 @@ const WeatherCardComponent = ( props : any ) => {
   
   return (
     <div className="cards-container">
-        <div data-placename={props.placename} onClick={handleCardOnClick}>
+        <div data-placename={props.placename} data-id={props.id} onClick={handleCardOnClick}>
             <Card style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
                 <Card.Body>
                     <Image src={imgSrc} fluid/>

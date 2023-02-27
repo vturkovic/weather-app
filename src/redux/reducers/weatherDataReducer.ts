@@ -12,7 +12,7 @@ const weatherDataReducer = (state = initialState, action: any): any => {
         weatherData: [...state.weatherData, action.payload],
       };
     case 'REMOVE_WEATHER_DATA':
-      const newData = state.weatherData.filter(data => data.placename !== action.payload);
+      const newData = state.weatherData.filter(data => data.id !== action.payload);
       return {
         ...state,
         weatherData: newData,

@@ -13,6 +13,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase } from '@firebaseActions';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const WeatherComponent = () => {
@@ -54,7 +55,7 @@ const WeatherComponent = () => {
     try {
       const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lng}&exclude=${OPENWEATHERMAP_API_EXCLUDE}&appid=${OPENWEATHERMAP_API_KEY}&units=${UNITS}`);
       const weatherInfo = response.data;
-      const weatherDataResponse = { placename, weatherInfo, isFavorite: false }
+      const weatherDataResponse = { id: uuidv4().slice(0, 8), placename, weatherInfo, isFavorite: false }
       dispatch(addWeatherData(weatherDataResponse));
       updateWeatherDataFirebase(weatherDataResponse);
     } catch (error) {
@@ -64,9 +65,9 @@ const WeatherComponent = () => {
     }
   };
 
-  const handleRemoveCard = (placename: string) => {
-    dispatch(removeWeatherData(placename));
-    removeWeatherDataFirebase(placename);
+  const handleRemoveCard = (cardId: number) => {
+    dispatch(removeWeatherData(cardId));
+    removeWeatherDataFirebase(cardId);
   };
 
   const handleCardOnClick = (place: string) => {
@@ -74,7 +75,6 @@ const WeatherComponent = () => {
     dispatch(setSelectedPlace(place));
   };
 
-  
   const handleFavoriteToggle = (placename: string, isFavorite: boolean) => {
     dispatch(toggleFavoritePlace({ placename, isFavorite }));
     toggleFavoritePlaceFirebase(placename, isFavorite);
@@ -88,6 +88,7 @@ const WeatherComponent = () => {
           {weatherDataRedux.length > 0 ? weatherDataRedux.slice().reverse().map((data:any, index: number) => (
           <WeatherCardComponent
             key={index}
+            id={data.id}
             placename={data.placename}
             weatherInfo={data.weatherInfo}
             onClick={handleCardOnClick}

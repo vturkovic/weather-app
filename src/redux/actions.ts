@@ -5,7 +5,7 @@ export const addWeatherData = (payload: WeatherDataInterface): any => ({
     payload
 });
 
-export const removeWeatherData = (payload: string): any => ({
+export const removeWeatherData = (payload: number): any => ({
     type: 'REMOVE_WEATHER_DATA',
     payload
 });
