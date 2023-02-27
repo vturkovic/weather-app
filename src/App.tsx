@@ -11,7 +11,6 @@ import FavoritesComponent from './components/favoritesComponent/favoritesCompone
 import WeatherPlaceComponent from './components/weatherComponent/weatherPlaceComponent/weatherPlaceComponent';
 import WeatherDayComponent from './components/weatherComponent/weatherDayTableComponent/weatherDayTableComponent';
 
-
 /* Dummy User
 user: abc@gmail.com
 pass: Asdfghjk! */
@@ -33,8 +32,6 @@ const App = () => {
           <Route path="weather/:place" element={<WeatherPlaceComponent />} />
           <Route path="weather/:place/:day" element={<WeatherDayComponent />} />
           <Route path="/favorites" element={<FavoritesComponent />} />
-          <Route path="/favorites/:place" element={<WeatherPlaceComponent />} />
-          <Route path="/favorites/:place/:day" element={<WeatherDayComponent />} />
           <Route path="*" element={<Navigate to="/weather" />} /> 
         </Routes>
       ) : (
