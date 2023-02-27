@@ -2,6 +2,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/database';
+import { WeatherData } from '@interfaces';
 
 // Get a reference to the Firebase Firestore database
 const db = firebase.firestore();
@@ -31,7 +32,7 @@ export const removeWeatherDataFirebase = async (id: number): Promise<void> => {
     await weatherDataRef.update({ weatherData: updatedData });
 };
 
-export const toggleFavoritePlaceFirebase = (placename: string, isFavorite: boolean) => {
+export const toggleFavoritePlaceFirebase = (id: number, isFavorite: boolean) => {
     // Find the document with the given userId in the weatherData collection
     const userId = localStorage.getItem('userId');
     if (!userId) return;
@@ -41,9 +42,9 @@ export const toggleFavoritePlaceFirebase = (placename: string, isFavorite: boole
     if (doc.exists) {
         const weatherData = doc.data()?.weatherData;
 
-        // Find the object with the given placename in the weatherData array and update its isFavorite property
+        // Find the object with the given id in the weatherData array and update its isFavorite property
         const updatedWeatherData = weatherData.map((data: any) => {
-        if (data.placename === placename) {
+        if (data.id === id) {
             return { ...data, isFavorite };
         }
         return data;
@@ -61,4 +62,43 @@ export const toggleFavoritePlaceFirebase = (placename: string, isFavorite: boole
     }).catch((error) => {
     console.error('Error getting document: ', error);
     });
+};
+
+export const addFavoriteWeatherDataFirebase = async (weatherData: WeatherData) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+  
+    const favoritesRef = firebase.firestore().collection('favorites').doc(userId);
+  
+    try {
+      const document = await favoritesRef.get();
+      if (document.exists) {
+        // If the document exists, update the 'favorites' array with the new data
+        await favoritesRef.update({
+          favorites: firebase.firestore.FieldValue.arrayUnion(weatherData)
+        });
+      } else {
+        // If the document doesn't exist, create it with the 'favorites' array containing the new data
+        await favoritesRef.set({
+          favorites: [weatherData]
+        });
+      }
+    } catch (error) {
+      console.error('Error adding favorite to Firebase:', error);
+    }
+};
+
+export const removeFavoriteWeatherDataFirebase  = async (id: number): Promise<void> => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+  
+    const weatherDataRef = db.collection('favorites').doc(userId);
+    const document = await weatherDataRef.get();
+    const weatherDataArray = document.get('favorites');
+  
+    const updatedData = weatherDataArray.filter(
+      (data: any) => data.id !== id
+    );
+  
+    await weatherDataRef.update({ favorites: updatedData });
 };

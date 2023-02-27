@@ -15,6 +15,21 @@ export const setWeatherData = (payload: WeatherDataInterface): any => ({
     payload
 });
 
+export const addFavoriteWeatherData = (payload: WeatherDataInterface): any => ({
+    type: 'ADD_FAVORITE_WEATHER_DATA',
+    payload
+});
+
+export const removeFavoriteWeatherData = (payload: number): any => ({
+    type: 'REMOVE_FAVORITE_WEATHER_DATA',
+    payload
+});
+
+export const setFavoriteWeatherData = (payload: WeatherDataInterface[]): any => ({
+    type: 'SET_FAVORITE_WEATHER_DATA',
+    payload
+});
+
 export const addFavoritePlace = (payload: boolean): any => ({
     type: 'ADD_FAVORITE_PLACE',
     payload
@@ -25,7 +40,7 @@ export const removeFavoritePlace = (payload: boolean): any => ({
     payload
 });
 
-export const toggleFavoritePlace = (data: { placename: string, isFavorite: boolean }) => ({
+export const toggleFavoritePlace = (data: { id: number, isFavorite: boolean }) => ({
     type: 'TOGGLE_FAVORITE_PLACE',
     payload: data
 });

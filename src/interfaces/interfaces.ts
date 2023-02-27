@@ -25,7 +25,7 @@ export interface WeatherData {
     id: number,
     placename: string,
     weatherInfo: any,
-    isFavorite: boolean,
+    isFavorite?: boolean,
 }
 
 export interface WeatherDataState {

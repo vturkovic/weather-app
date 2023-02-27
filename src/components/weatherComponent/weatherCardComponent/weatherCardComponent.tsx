@@ -36,7 +36,7 @@ const WeatherCardComponent = ( props : any ) => {
   
   const handleFavoriteToggle = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      props.onFavoriteToggle(props.placename, !isFavorite);
+      props.onFavoriteToggle(props.id, !isFavorite);
     },
     [isFavorite, props]
   );

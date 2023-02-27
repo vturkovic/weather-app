@@ -24,7 +24,7 @@ const weatherDataReducer = (state = initialState, action: any): any => {
       };
     case 'TOGGLE_FAVORITE_PLACE':
       const updatedWeatherData = state.weatherData.map(data => {
-        if (data.placename === action.payload.placename) {
+        if (data.id === action.payload.id) {
           return { ...data, isFavorite: action.payload.isFavorite };
         }
         return data;

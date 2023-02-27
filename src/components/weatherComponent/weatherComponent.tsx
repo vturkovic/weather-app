@@ -6,13 +6,13 @@ import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import { extractFirstSubstring } from '@helperService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWeatherData, addWeatherData, removeWeatherData, setSelectedPlace, toggleFavoritePlace } from '@reduxActions';
+import { setWeatherData, addWeatherData, removeWeatherData, setSelectedPlace, toggleFavoritePlace, addFavoriteWeatherData, removeFavoriteWeatherData } from '@reduxActions';
 import { RootState } from '@reduxStore';
 import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS, MAX_PLACES_ALERT_MESSAGE } from '@constants';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase } from '@firebaseActions';
+import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase, addFavoriteWeatherDataFirebase } from '@firebaseActions';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -75,9 +75,22 @@ const WeatherComponent = () => {
     dispatch(setSelectedPlace(place));
   };
 
-  const handleFavoriteToggle = (placename: string, isFavorite: boolean) => {
-    dispatch(toggleFavoritePlace({ placename, isFavorite }));
-    toggleFavoritePlaceFirebase(placename, isFavorite);
+  const handleFavoriteToggle = (id: number, isFavorite: boolean) => {
+    dispatch(toggleFavoritePlace({ id, isFavorite }));
+    toggleFavoritePlaceFirebase(id, isFavorite);
+
+    const favoriteWeatherData = weatherDataRedux.find((obj: any) => obj.id === id);
+
+    // metoda za dodavanje favorite u redux state
+    if (isFavorite) {
+      dispatch(addFavoriteWeatherData(favoriteWeatherData));
+      addFavoriteWeatherDataFirebase(favoriteWeatherData);
+    } else {
+      dispatch(removeFavoriteWeatherData(id));
+    }
+
+    // metoda za dodavnje favorite u firebase
+
   };
 
   return (
@@ -86,17 +99,17 @@ const WeatherComponent = () => {
           <SearchComponent onPlaceNameChanged={handlePlacename}/>
           {isLoading ? <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : null }
           {weatherDataRedux.length > 0 ? weatherDataRedux.slice().reverse().map((data:any, index: number) => (
-          <WeatherCardComponent
-            key={index}
-            id={data.id}
-            placename={data.placename}
-            weatherInfo={data.weatherInfo}
-            onClick={handleCardOnClick}
-            onRemove={handleRemoveCard} 
-            onFavoriteToggle={handleFavoriteToggle}
-            hasFavoriteToggle={true}
-          />
-        )) : null}
+            <WeatherCardComponent
+              key={index}
+              id={data.id}
+              placename={data.placename}
+              weatherInfo={data.weatherInfo}
+              onClick={handleCardOnClick}
+              onRemove={handleRemoveCard} 
+              onFavoriteToggle={handleFavoriteToggle}
+              hasFavoriteToggle={true}
+            />
+          )) : null}
         </div>
     </div>
   );
