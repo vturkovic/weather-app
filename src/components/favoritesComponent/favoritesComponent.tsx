@@ -41,7 +41,6 @@ const FavoritesComponent = () => {
     dispatch(toggleFavoritePlace({ id, isFavorite }));
     toggleFavoritePlaceFirebase(id, isFavorite);
 
-    //
     dispatch(removeFavoriteWeatherData(id));
     removeFavoriteWeatherDataFirebase(id);
   };

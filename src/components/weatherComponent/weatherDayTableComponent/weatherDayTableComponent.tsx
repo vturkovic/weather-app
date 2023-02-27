@@ -41,9 +41,7 @@ export const WeatherDayComponent = () => {
   useEffect(() => {
     if (weatherDataArray.length > 0) {
       fetchWeatherInfo(weatherInfo);
-      console.log('ide ovo')
     } else {
-      console.log('ide ipak ovo')
       const userId = localStorage.getItem('userId');
       if (userId) {
         const weatherDataRef = firebase.firestore().collection('weatherData').doc(userId);
