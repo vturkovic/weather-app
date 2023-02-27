@@ -1,15 +1,23 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import DayCardComponent from './dayCardComponent/dayCardComponent';
 import { RootState } from '@reduxStore';
 import { searchObjectsByPlacename, shortenString } from '@helperService';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
 import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS } from '@constants';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import { setWeatherData as setWeatherDataRedux } from '@reduxActions';
+
 
 export const WeatherPlaceComponent = () => {
 
+  const { place } = useParams();
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -17,9 +25,9 @@ export const WeatherPlaceComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [weatherData, setWeatherData] = useState([]);
 
-  const place = useSelector((state: RootState) => state.selectedPlace.selectedPlace);
+  const placeState = useSelector((state: RootState) => state.selectedPlace.selectedPlace);
   const weatherDataArray = useSelector((state: RootState) => state.weatherData.weatherData);
-  const placeWeatherData = searchObjectsByPlacename(place?.toString(), weatherDataArray);
+  const placeWeatherData = searchObjectsByPlacename(placeState?.toString(), weatherDataArray);
 
   const handleCardOnClick = (day: string) => {
     navigate(currentPath + '/' + day);
@@ -39,26 +47,46 @@ export const WeatherPlaceComponent = () => {
   };
 
   useEffect(() => {
-    fetchWeatherInfo({
-      lat: placeWeatherData.weatherInfo.lat, 
-      lng: placeWeatherData.weatherInfo.lon
-    });
+    if (weatherDataArray.length > 0) {
+      fetchWeatherInfo({
+        lat: placeWeatherData.weatherInfo.lat, 
+        lng: placeWeatherData.weatherInfo.lon
+      });
+    } else {
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        const weatherDataRef = firebase.firestore().collection('weatherData').doc(userId);
+        weatherDataRef.get().then((doc) => {
+          if (doc && doc.exists) {
+            const weatherData = doc.data()?.weatherData || [];
+            const placeWeatherData = weatherData.find((obj:any) => obj.placename.toLowerCase().includes(place))
+            fetchWeatherInfo({
+              lat: placeWeatherData.weatherInfo.lat, 
+              lng: placeWeatherData.weatherInfo.lon
+            });
+            dispatch(setWeatherDataRedux(weatherData));
+          }
+        }).catch((error) => {
+          console.error('Error getting weather data:', error);
+        });
+      }
+    }
   }, []);
 
   return (
     <div className="weather-place-container">
       <div className="weather-place-title">
-        <h2>5-day-weather for {`${shortenString(place?.charAt(0).toUpperCase()+place?.slice(1))}`}</h2>
+        <h2>5-day-weather for {`${shortenString(placeState?.charAt(0).toUpperCase()+placeState?.slice(1))}`}</h2>
       </div>
       <div className="day-cards-container">
         {isLoading ? <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : null } 
-        {weatherData.map((data: any, index: number) => {
+        {weatherData.length > 0 ? weatherData.map((data: any, index: number) => {
             return (<DayCardComponent
               key={index}
               weatherInfo={data}
               onClick={handleCardOnClick}
             />)
-          })}
+          }): null}
       </div>
     </div>
   );

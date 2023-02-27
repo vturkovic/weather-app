@@ -4,3 +4,15 @@
 @import '../components/favoritesComponent/favoritesComponent.scss';
 @import '../components/searchComponent/searchComponent.scss';
 @import './variables.scss';
+
+.app-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+    }
+}

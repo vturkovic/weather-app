@@ -57,3 +57,8 @@ export   const filterHourlyDataByDay = (hourlyData: any[], day: any): any[] => {
     };
   });
 };
+
+export const extractSecoundLastParamFromPath = (path: string) => {
+  const first = path.slice(0, path.lastIndexOf('/'));
+  return first.slice(first.lastIndexOf('/') + 1, first.length);
+};

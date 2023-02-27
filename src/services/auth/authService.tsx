@@ -62,13 +62,17 @@ const authService = {
     }
   },
 
-  async isAuthenticated(dispatch: any) {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(authLogin());
-      } else {
-        dispatch(authLogout());
-      }
+  async isAuthenticated(dispatch: any): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          dispatch(authLogin());
+          resolve(true);
+        } else {
+          dispatch(authLogout());
+          resolve(false);
+        }
+      });
     });
   }
 };

@@ -12,7 +12,7 @@ import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS, MAX_PLACES_A
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase, addFavoriteWeatherDataFirebase } from '@firebaseActions';
+import { updateWeatherDataFirebase, toggleFavoritePlaceFirebase, removeWeatherDataFirebase, addFavoriteWeatherDataFirebase, removeFavoriteWeatherDataFirebase } from '@firebaseActions';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -80,17 +80,13 @@ const WeatherComponent = () => {
     toggleFavoritePlaceFirebase(id, isFavorite);
 
     const favoriteWeatherData = weatherDataRedux.find((obj: any) => obj.id === id);
-
-    // metoda za dodavanje favorite u redux state
     if (isFavorite) {
       dispatch(addFavoriteWeatherData(favoriteWeatherData));
       addFavoriteWeatherDataFirebase(favoriteWeatherData);
     } else {
       dispatch(removeFavoriteWeatherData(id));
+      removeFavoriteWeatherDataFirebase(id);
     }
-
-    // metoda za dodavnje favorite u firebase
-
   };
 
   return (

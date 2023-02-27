@@ -13,6 +13,10 @@
         border: 1px solid $cardBorderColor;
         border-radius: 5px;
 
+        &:hover {
+            opacity: 0.95;
+        }
+
         .card-main-text {
             display: flex;
             align-items: center;
