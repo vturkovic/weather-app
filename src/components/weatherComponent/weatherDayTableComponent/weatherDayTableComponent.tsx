@@ -49,8 +49,8 @@ export const WeatherDayComponent = () => {
           if (doc && doc.exists) {
             const weatherData = doc.data()?.weatherData || [];
             const placeSearch = placeState ? placeState : placeParam;
-            console.log('placeSearch', placeSearch)
-            const placeWeatherData = weatherData.find((obj:any) => obj.placename.toLowerCase().includes(placeSearch));
+            const placeEncoded = decodeURIComponent(placeSearch);
+            const placeWeatherData = weatherData.find((obj:any) => obj.placename.includes(placeEncoded));
             fetchWeatherInfo({
               lat: placeWeatherData.weatherInfo.lat, 
               lon: placeWeatherData.weatherInfo.lon
@@ -86,7 +86,7 @@ export const WeatherDayComponent = () => {
   return (
     <div className="weather-place-container">
       <div className="weather-place-title">
-        <h2>Hourly weather for {`${shortenString(placeName?.charAt(0).toUpperCase()+placeName?.slice(1))}, ${day ? transformUnixTimestamp(parseInt(day)): null}`}</h2>
+        <h2>Hourly weather for {`${decodeURIComponent(shortenString(placeName?.charAt(0).toUpperCase()+placeName?.slice(1)))}, ${day ? transformUnixTimestamp(parseInt(day)): null}`}</h2>
       </div>
       <div className="day-cards-container">
         {isLoading ? 

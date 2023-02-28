@@ -24,10 +24,12 @@ export const WeatherPlaceComponent = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [weatherData, setWeatherData] = useState([]);
-
+  
   const placeState = useSelector((state: RootState) => state.selectedPlace.selectedPlace);
   const weatherDataArray = useSelector((state: RootState) => state.weatherData.weatherData);
   const placeWeatherData = searchObjectsByPlacename(placeState?.toString(), weatherDataArray);
+
+  const [placeName, setPlaceName] = useState(placeState);
 
   const handleCardOnClick = (day: string) => {
     navigate(currentPath + '/' + day);
@@ -59,7 +61,9 @@ export const WeatherPlaceComponent = () => {
         weatherDataRef.get().then((doc) => {
           if (doc && doc.exists) {
             const weatherData = doc.data()?.weatherData || [];
-            const placeWeatherData = weatherData.find((obj:any) => obj.placename.toLowerCase().includes(place))
+            const placeDecoded = place ? decodeURIComponent(place) : '';
+            setPlaceName(placeDecoded);
+            const placeWeatherData = weatherData.find((obj:any) => obj.placename.includes(placeDecoded));
             fetchWeatherInfo({
               lat: placeWeatherData.weatherInfo.lat, 
               lng: placeWeatherData.weatherInfo.lon
@@ -76,7 +80,7 @@ export const WeatherPlaceComponent = () => {
   return (
     <div className="weather-place-container">
       <div className="weather-place-title">
-        <h2>5-day-weather for {`${shortenString(placeState?.charAt(0).toUpperCase()+placeState?.slice(1))}`}</h2>
+        <h2>5-day-weather for {`${shortenString(placeName?.charAt(0).toUpperCase()+placeName?.slice(1))}`}</h2>
       </div>
       <div className="day-cards-container">
         {isLoading ? <Spinner className="spinner" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> : null } 
