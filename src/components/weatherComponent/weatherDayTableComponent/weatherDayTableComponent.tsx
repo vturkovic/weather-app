@@ -40,7 +40,10 @@ export const WeatherDayComponent = () => {
 
   useEffect(() => {
     if (weatherDataArray.length > 0) {
-      fetchWeatherInfo(weatherInfo);
+      fetchWeatherInfo({
+        lat: weatherInfo.lat, 
+        lon: weatherInfo.lon
+      });
     } else {
       const userId = localStorage.getItem('userId');
       if (userId) {
@@ -70,10 +73,10 @@ export const WeatherDayComponent = () => {
     setTableRowData(resultArray);
   }, [hourlyData, day]); 
 
-  const fetchWeatherInfo = async (weatherInfo: any) => {
+  const fetchWeatherInfo = async (coords: {lat: number, lon: number}) => {
     setIsLoading(true);
     try {
-      const response: any = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${weatherInfo.lat}&lon=${weatherInfo.lon}&appid=${OPENWEATHERMAP_API_KEY}&dt=${day}&cnt=${OPENWEATHER_API_NUMBER_OF_HOURS}&units=metric`);
+      const response: any = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${coords.lat}&lon=${coords.lon}&appid=${OPENWEATHERMAP_API_KEY}&dt=${day}&cnt=${OPENWEATHER_API_NUMBER_OF_HOURS}&units=metric`);
       const result = response.data;
       setHourlyData(result.list);
     } catch (error) {
