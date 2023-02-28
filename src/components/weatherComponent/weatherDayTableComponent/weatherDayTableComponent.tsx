@@ -34,9 +34,11 @@ export const WeatherDayComponent = () => {
 
   const placeState = useSelector((state: RootState) => state.selectedPlace.selectedPlace);
   const weatherDataArray = useSelector((state: RootState) => state.weatherData.weatherData);
-  const placeWeatherData = searchObjectsByPlacename(placeState?.toString(), weatherDataArray);
-  const weatherInfo = placeWeatherData?.weatherInfo;
+  
   const placeName = placeState ? placeState : placeParam;
+
+  const placeWeatherData = searchObjectsByPlacename(decodeURIComponent(placeName).toString(), weatherDataArray);
+  const weatherInfo = placeWeatherData?.weatherInfo;
 
   useEffect(() => {
     if (weatherDataArray.length > 0) {

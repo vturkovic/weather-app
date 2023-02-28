@@ -10,7 +10,8 @@ import { OPENWEATHERMAP_API_KEY, OPENWEATHERMAP_API_EXCLUDE, UNITS } from '@cons
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { setWeatherData as setWeatherDataRedux } from '@reduxActions';
+import { setWeatherData as setWeatherDataRedux, addWeatherData } from '@reduxActions';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const WeatherPlaceComponent = () => {
@@ -35,12 +36,18 @@ export const WeatherPlaceComponent = () => {
     navigate(currentPath + '/' + day);
   };
 
-  const fetchWeatherInfo = async (coords: {lat: number, lng: number}) => {
+  const fetchWeatherInfo = async (coords: {lat: number, lng: number}, placename?: string | undefined) => {
     setIsLoading(true);
     try {
       const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${coords.lat}&lon=${coords.lng}&exclude=${OPENWEATHERMAP_API_EXCLUDE}&appid=${OPENWEATHERMAP_API_KEY}&units=${UNITS}`);
       const weatherInfo = response.data;
       setWeatherData(weatherInfo.daily.slice(0, 5));
+
+      if (placename) {
+        const weatherDataResponse = { id: uuidv4().slice(0, 8), placename, weatherInfo, isFavorite: false };
+        dispatch(addWeatherData(weatherDataResponse));
+      }
+
     } catch (error) {
         console.log(error);
     } finally {
@@ -48,8 +55,24 @@ export const WeatherPlaceComponent = () => {
     }
   };
 
+  const getCoordsFromPlacename = async (place: string | undefined) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${place}&format=json&limit=1`);
+      const coords = { 
+        lat: response.data[0].lat, 
+        lng: response.data[0].lon 
+      };
+      fetchWeatherInfo(coords, place);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (weatherDataArray.length > 0) {
+    if (weatherDataArray.length > 0 && placeState) {
       fetchWeatherInfo({
         lat: placeWeatherData.weatherInfo.lat, 
         lng: placeWeatherData.weatherInfo.lon
@@ -64,11 +87,17 @@ export const WeatherPlaceComponent = () => {
             const placeDecoded = place ? decodeURIComponent(place) : '';
             setPlaceName(placeDecoded);
             const placeWeatherData = weatherData.find((obj:any) => obj.placename.includes(placeDecoded));
-            fetchWeatherInfo({
-              lat: placeWeatherData.weatherInfo.lat, 
-              lng: placeWeatherData.weatherInfo.lon
-            });
-            dispatch(setWeatherDataRedux(weatherData));
+
+            if (placeWeatherData) {
+              fetchWeatherInfo({
+                lat: placeWeatherData.weatherInfo.lat, 
+                lng: placeWeatherData.weatherInfo.lon
+              });
+              dispatch(setWeatherDataRedux(weatherData));
+            } else {
+              getCoordsFromPlacename(place);
+              dispatch(setWeatherDataRedux(weatherData));
+            }
           }
         }).catch((error) => {
           console.error('Error getting weather data:', error);
