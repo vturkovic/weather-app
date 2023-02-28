@@ -63,6 +63,10 @@
                 display: none;
             }
         }
+
+        .card-title.h5 {
+            font-size: 15px;
+        }
     }
 }
 
@@ -89,6 +93,10 @@
 
         .card-title.h5 {
             font-size: 13px !important;
+        }
+
+        .card-text {
+            font-size: 13px;
         }
 
 

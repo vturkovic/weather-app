@@ -108,6 +108,9 @@
   .card .card-main-text p:nth-of-type(2) {
     display: none;
   }
+  .card .card-title.h5 {
+    font-size: 15px;
+  }
 }
 @media only screen and (max-width: 500px) {
   .card {
@@ -125,6 +128,9 @@
   }
   .card .card-title.h5 {
     font-size: 13px !important;
+  }
+  .card .card-text {
+    font-size: 13px;
   }
 }
 .weather-place-container {
@@ -144,6 +150,16 @@
   top: -1px;
 }
 
+@media only screen and (max-width: 768px) {
+  .weather-place-container h2 {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .weather-place-container h2 {
+    font-size: 15px;
+  }
+}
 .weather-container {
   display: flex;
   flex-direction: column;
